@@ -1,6 +1,7 @@
 # Todos
 1. create game logic in cosole first
-
+2. build ui with static data
+3. replace static data with dynamic one
 
 # Game Plan
 
