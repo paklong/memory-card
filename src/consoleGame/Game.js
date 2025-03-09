@@ -14,13 +14,13 @@ export default class Game {
 
   nextRound() {
     this.shuffle();
-    if (this.shouldAddMoreCard) {
+    if (this.shouldAddMoreCard()) {
       this.addMoreCard();
     }
     this.showCards();
     const userPicked = this.getUserPick();
-    const pickResult = this.userPickCard(userPicked);
-    if (pickResult === "Card Picked Already") {
+    const pickResult = this.userPickCard(parseInt(userPicked));
+    if (pickResult === "success") {
       this.score++;
       return true;
     } else {
@@ -37,7 +37,7 @@ export default class Game {
   }
 
   showCards() {
-    console.log(this.cards);
+    return this.cards;
   }
 
   getUserPick() {
@@ -45,11 +45,11 @@ export default class Game {
   }
 
   getTotalPicked() {
-    return this.cards.filter((card) => card.isPicked).lenght;
+    return this.cards.filter((card) => card.isPicked).length;
   }
 
   shouldAddMoreCard() {
-    return this.getTotalPicked() > this.cards.length ? true : false;
+    return this.getTotalPicked() > this.cards.length * 0.8 ? true : false;
   }
 
   addMoreCard() {
@@ -62,8 +62,7 @@ export default class Game {
   }
 
   endGame() {
-    console.log(`You Lose. Score: ${this.score}`);
-    return this.score;
+    return `You Lose. Score: ${this.score}`;
   }
 
   getScore() {

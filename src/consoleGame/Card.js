@@ -9,10 +9,10 @@ export default class Card {
   }
   markIsPicked() {
     if (this.checkIsPicked()) {
-      return "Card Picked Already";
+      return "fail";
     }
     this.isPicked = true;
-    return "Card Successfully";
+    return "success";
   }
   getDetails() {
     return `Card id:${this.id}, name:${this.name}, isPicked:${this.isPicked}`;

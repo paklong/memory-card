@@ -38,7 +38,7 @@ describe("Card class", () => {
     it("should set isPicked to true and return success message when card is not picked", () => {
       const result = card.markIsPicked();
       expect(card.isPicked).toBe(true);
-      expect(result).toBe("Card Successfully");
+      expect(result).toBe("success");
     });
 
     it("should return already picked message and not change state when card is already picked", () => {
@@ -47,7 +47,7 @@ describe("Card class", () => {
       const result = card.markIsPicked(); // Second pick attempt
 
       expect(card.isPicked).toBe(initialState); // State shouldn't change
-      expect(result).toBe("Card Picked Already");
+      expect(result).toBe("fail");
     });
   });
 
