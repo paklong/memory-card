@@ -1,10 +1,12 @@
 import "./App.css";
-import Game from "./consoleGame/Game.js";
-
-window.Game = Game;
+import Game from "./components/Game.jsx";
 
 function App() {
-  return <h1> Hi </h1>;
+  return (
+    <>
+      <Game />
+    </>
+  );
 }
 
 export default App;

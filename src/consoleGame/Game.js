@@ -1,30 +1,41 @@
 import CardGenerator from "./CardGenerator.js";
 
 export default class Game {
-  constructor() {
+  constructor(cardCount) {
     this.cardGenerator = new CardGenerator();
+    this.cardCount = cardCount;
     this.score = 0;
     this.cards = [];
+    this.growFactor = 0.7;
   }
 
   startGame() {
     this.score = 0;
-    this.cards = this.cardGenerator.generateNewCard(12);
+    this.cards = this.cardGenerator.generateNewCard(this.cardCount);
+    let keepGoing = true;
+    while (keepGoing) {
+      keepGoing = this.nextRound();
+    }
   }
 
   nextRound() {
-    this.shuffle();
     if (this.shouldAddMoreCard()) {
       this.addMoreCard();
     }
-    this.showCards();
+    this.shuffle();
+    console.clear();
+    console.log("\n\n\n\n\n\n\n");
+    console.log(`Score :${this.score}`);
+    this.showCards().map((card, index) => {
+      console.log(`${index}: ${card.name}`);
+    });
     const userPicked = this.getUserPick();
     const pickResult = this.userPickCard(parseInt(userPicked));
     if (pickResult === "success") {
       this.score++;
       return true;
     } else {
-      this.endGame();
+      console.log(this.endGame());
       return false;
     }
   }
@@ -49,11 +60,19 @@ export default class Game {
   }
 
   shouldAddMoreCard() {
-    return this.getTotalPicked() > this.cards.length * 0.8 ? true : false;
+    if (
+      this.getTotalPicked() >= Math.floor(this.cards.length * this.growFactor)
+    ) {
+      const max = 1;
+      const min = 0.7;
+      this.growFactor = Math.random() * (max - min) + min;
+      return true;
+    }
+    return false;
   }
 
   addMoreCard() {
-    const cardsToAdd = this.cardGenerator.generateNewCard(12);
+    const cardsToAdd = this.cardGenerator.generateNewCard(this.cardCount);
     this.cards = [...this.cards, ...cardsToAdd];
   }
 
